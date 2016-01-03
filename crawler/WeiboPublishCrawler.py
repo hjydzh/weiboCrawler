@@ -1,4 +1,6 @@
-#coding:utf-8
+#coding:utf-
+import sys
+sys.path.append('..')
 from Pages import WeiboPageCommon
 from Pages import HomePage
 from strategy import PublishStrategy

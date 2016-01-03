@@ -23,6 +23,7 @@ def __comment_list(weibo_driver):
 
 #解析一条评论，返回(发表评论的地址和评论,名字)
 def __comment_parse(comment_driver):
+    print('解析一条评论')
     comment = Comment()
     comment_text_list = comment_driver.find_element_by_class_name('WB_text').find_elements_by_tag_name('a')
     comment.fnas_url = comment_text_list[0].get_attribute('href')
@@ -44,6 +45,7 @@ def __comment_text_filter(comment_text):
 
 #解析一条微博
 def weibo_parse(weibo_driver):
+    print('解析一条微博')
     try:
         #自己微博就不会有
         weibo_info = weibo_driver.find_element_by_class_name('WB_info').find_element_by_tag_name('a')
