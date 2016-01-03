@@ -19,7 +19,7 @@ def get_firfox():
 def get_browser():
     dcap = dict(DesiredCapabilities.PHANTOMJS)
     phantomjs_path = Const.PHANTOMJS_PATH
-    phantomjs_path = "G:\\programeSoftwares\\python2.7\\Scripts\\phantomjs.exe"
+    #phantomjs_path = "G:\\programeSoftwares\\python2.7\\Scripts\\phantomjs.exe"
     dcap["phantomjs.page.settings.userAgent"] = (
             #"Mozilla/5.0 (iPad; CPU OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5355d Safari/8536.25"
             #"Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A403 Safari/8536.25"
