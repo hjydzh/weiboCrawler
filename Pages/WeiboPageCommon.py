@@ -131,6 +131,7 @@ def __inner_weibo_parse(weibo_driver):
 def get_all_weibo(webdriver):
      print '获取所有微博列表'
      weibo_list = webdriver.find_element_by_xpath("//div[@node-type='homefeed']").find_elements_by_xpath(".//div[@action-type='feed_list_item']")
+     print '获取列表成功'
      return weibo_list
 
 def scroll(driver):

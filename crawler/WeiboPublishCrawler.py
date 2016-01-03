@@ -1,6 +1,6 @@
 #coding:utf-
 import sys
-sys.path.append('../WeiboPublishCrawler.py')
+sys.path.append('/home/workspace/webcrawler/weiboCrawler/crawler')
 from Pages import WeiboPageCommon
 from Pages import HomePage
 from strategy import PublishStrategy
