@@ -4,9 +4,14 @@ import time
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 from commons.CommonConst import *
+import pickle
+import os
+from selenium.common.exceptions import TimeoutException
 
 def get_chrome():
+    profile_dir=r"C:\Users\junyu\AppData\Local\Google\Chrome\User Data"
     options = webdriver.ChromeOptions()
+    #options.add_argument("user-data-dir="+os.path.abspath(profile_dir))
     options.add_experimental_option("excludeSwitches", ["ignore-certificate-errors"])
     return webdriver.Chrome('G:/lessUsedTools/browser/chrome/chromedriver.exe',chrome_options=options)
 
@@ -35,7 +40,7 @@ def get_browser():
     browser.set_window_size(1366, 768)
     return browser
 
-def login(browser, username, passwd):
+def mobile_login(browser, username, passwd):
     print '开始登录'
     PORTAL_URL = 'http://m.weibo.cn'
     browser.get(PORTAL_URL)
@@ -59,6 +64,38 @@ def __input_login_info(browser, username, passwd):
     time.sleep(5)
     browser.get('http://weibo.com')
     time.sleep(5)
+
+def log_in(browser, username, passwd):
+    browser.get('http://weibo.com/')
+    #time.sleep(5)
+    browser.find_element_by_xpath("//input[@node-type='username']").send_keys(username)
+    browser.find_element_by_xpath("//input[@node-type='password']").send_keys(passwd)
+    #browser.find_element_by_xpath("//a[@node-type='submitBtn']").click()
+    #time.sleep(5)
+    cookies = browser.get_cookies()
+    pickle.dump(cookies, open('cookie', 'wb'))
+    browser.get('http://weibo.com/')
+
+def login_by_cookie(browser):
+    print '开始登录'
+    try:
+        browser.get('http://weibo.com/')
+    except TimeoutException:
+        print '页面加载超时，停止加载'
+        browser.execute_script('window.stop()')
+
+    browser.execute_script('window.stop()')
+    print('登录成功')
+    browser.delete_all_cookies()
+    print('删除原来cookies')
+    for cookie in pickle.load(open('cookie')):
+        try:
+            browser.add_cookie(cookie)
+        except:
+            pass
+    print('添加历史cookies')
+    browser.get('http://weibo.com/')
+
 
 if __name__ == '__main__':
     print ''

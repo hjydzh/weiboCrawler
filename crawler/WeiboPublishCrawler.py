@@ -15,7 +15,6 @@ class WeiboPublishCrawler:
         self.browser = browser
 
     def publish(self):
-        #LoginController.log_in(self.browser, '2823128008@qq.com', 'a13870093884')
         LoginController.login_by_cookie(self.browser)
         #WeiboPageCommon.scroll(self.browser)
         time.sleep(4)
