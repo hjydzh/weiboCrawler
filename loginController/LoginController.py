@@ -88,7 +88,7 @@ def login_by_cookie(browser):
     print('登录成功')
     browser.delete_all_cookies()
     print('删除原来cookies')
-    for cookie in pickle.load(open('cookie')):
+    for cookie in pickle.load(open('/home/workspace/webcrawler/weiboCrawler/crawler/cookie')):
         try:
             browser.add_cookie(cookie)
         except:
