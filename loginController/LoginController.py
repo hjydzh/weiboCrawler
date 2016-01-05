@@ -95,7 +95,8 @@ def login_by_cookie(browser):
             pass
     print('添加历史cookies')
     browser.get('http://weibo.com/')
-
+    print '页面标题:'
+    print browser.title
 
 if __name__ == '__main__':
     print ''
