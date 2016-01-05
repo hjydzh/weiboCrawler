@@ -15,10 +15,10 @@ class WeiboPublishCrawler:
         self.browser = browser
 
     def publish(self):
+        self.browser.set_page_load_timeout(120)
         LoginController.login_by_cookie(self.browser)
         #WeiboPageCommon.scroll(self.browser)
         time.sleep(4)
-        self.browser.set_page_load_timeout(120)
         weibo_list =  WeiboPageCommon.get_all_weibo(self.browser)
         weibos = map(lambda weibo_driver:self.__get_webibo_info(weibo_driver), weibo_list)
         #WeiboPageCommon.scroll(self.browser)
