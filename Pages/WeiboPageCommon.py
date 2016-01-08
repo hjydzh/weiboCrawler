@@ -128,9 +128,9 @@ def __inner_weibo_parse(weibo_driver):
     return weibo
 
 #获得所有微博
-def get_all_weibo(webdriver):
+def get_all_weibo(browser):
      print '获取所有微博列表'
-     weibo_list = webdriver.find_element_by_xpath("//div[@node-type='homefeed']").find_elements_by_xpath(".//div[@action-type='feed_list_item']")
+     weibo_list = browser.find_element_by_xpath("//div[@node-type='homefeed']").find_elements_by_xpath(".//div[@action-type='feed_list_item']")
      print '获取列表成功'
      return weibo_list
 

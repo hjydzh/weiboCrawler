@@ -16,13 +16,13 @@ class WeiboPublishCrawler:
 
     def publish(self):
         self.browser.set_page_load_timeout(120)
-        LoginController.mobile_login(self.browser, '2823128008@qq.com', "a13870093884")
+        browser = LoginController.mobile_login(self.browser, '2823128008@qq.com', "a13870093884")
         #LoginController.login_by_cookie(self.browser)
         #WeiboPageCommon.scroll(self.browser)
         print('等待4s')
         time.sleep(4)
         print('等待结束')
-        weibo_list =  WeiboPageCommon.get_all_weibo(self.browser)
+        weibo_list =  WeiboPageCommon.get_all_weibo(browser)
         weibos = map(lambda weibo_driver:self.__get_webibo_info(weibo_driver), weibo_list)
         #WeiboPageCommon.scroll(self.browser)
         weibos.extend(map(lambda weibo_driver:self.__get_webibo_info(weibo_driver), WeiboPageCommon.get_all_weibo(self.browser)[len(weibo_list):]))
