@@ -16,7 +16,8 @@ class WeiboPublishCrawler:
 
     def publish(self):
         self.browser.set_page_load_timeout(120)
-        LoginController.login_by_cookie(self.browser)
+        LoginController.mobile_login(self.browser, '2823128008@qq.com', "a13870093884")
+        #LoginController.login_by_cookie(self.browser)
         #WeiboPageCommon.scroll(self.browser)
         print('等待4s')
         time.sleep(4)
