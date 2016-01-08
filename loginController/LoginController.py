@@ -35,7 +35,7 @@ def get_browser():
             #"Mozilla/6.0 (iPhone; CPU iPhone OS 8_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/8.0 Mobile/10A5376e Safari/8536.25"
             "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36"
     )
-    browser = webdriver.PhantomJS(desired_capabilities=dcap, executable_path=phantomjs_path)
+    browser = webdriver.PhantomJS(desired_capabilities=dcap,executable_path=phantomjs_path)
         #self.browser = webdriver.PhantomJS(desired_capabilities=dcap)
     browser.set_window_size(1366, 768)
     return browser
@@ -86,15 +86,18 @@ def login_by_cookie(browser):
 
     browser.execute_script('window.stop()')
     print('登录成功')
+    time.sleep(5)
+    browser.execute_script('window.stop()')
     browser.delete_all_cookies()
     print('删除原来cookies')
-    for cookie in pickle.load(open('/home/workspace/webcrawler/weiboCrawler/crawler/cookie')):
+    for cookie in pickle.load(open('cookie')):
         try:
             browser.add_cookie(cookie)
         except:
             pass
     print('添加历史cookies')
     browser.get('http://weibo.com/')
+    time.sleep(5)
     print '页面标题:'
     print browser.title
 
