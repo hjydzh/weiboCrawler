@@ -7,8 +7,7 @@ def nums_strategy(weibos):
         if weibo is None:
             continue
         author_info = weibo.author_info
-        if weibo.comment_list is None or weibo.author_name != author_info.name:
-            print  weibo.author_name, author_info.name
+        if weibo.comment_list is None or author_info is None:
             weibo.mark = 0.0
             continue
         print '%s, 关注:%s ,粉丝:%s, 微博:%s -----转发:%s(%s), 评论:%s(%s),, 赞:%s(%s)' % (weibo.author_name,author_info.focus_num, author_info.fans_num, author_info.weibo_num, weibo.forward_num,weibo.forward_num/author_info.fans_num, weibo.comment_num,weibo.comment_num/author_info.fans_num,weibo.good_num,weibo.good_num/author_info.fans_num)
