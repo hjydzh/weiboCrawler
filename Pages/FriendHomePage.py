@@ -13,7 +13,7 @@ def focus_friend_action(driver):
 
 #返回[关注数，粉丝数，微博数]
 def get_friend_info(web_driver):
-    return [int(num.text) for num in web_driver.find_elements_by_class_name('W_f18')[:3]]
+    return [int(num.text) for num in web_driver.find_element_by_class_name('tb_counter').find_elements_by_tag_name('strong')[:3]]
 
 #关注按钮
 def focus_action(webdriver):
