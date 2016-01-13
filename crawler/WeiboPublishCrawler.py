@@ -18,7 +18,7 @@ class WeiboPublishCrawler:
 
     def publish(self):
         self.browser.set_page_load_timeout(120)
-        
+        #browser = LoginController.log_in(self.browser, '2823128008@qq.com', "a13870093884")
         LoginController.login_by_cookie(self.browser)
         #LoginController.login_by_cookie(self.browser)
         #WeiboPageCommon.scroll(self.browser)
@@ -34,7 +34,7 @@ class WeiboPublishCrawler:
             weibo_list =  WeiboPageCommon.get_all_weibo(self.browser)
         weibos = map(lambda weibo_driver:self.__get_webibo_info(weibo_driver), weibo_list)
         #WeiboPageCommon.scroll(self.browser)
-        #weibos.extend(map(lambda weibo_driver:self.__get_webibo_info(weibo_driver), WeiboPageCommon.get_all_weibo(self.browser)[len(weibo_list):]))
+        weibos.extend(map(lambda weibo_driver:self.__get_webibo_info(weibo_driver), WeiboPageCommon.get_all_weibo(self.browser)[len(weibo_list):]))
         weibos = filter(lambda w : w is not None , weibos)
         #打开新的选项卡
         #self.browser.find_element_by_tag_name("body").send_keys(Keys.CONTROL + 't')
