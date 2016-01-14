@@ -171,9 +171,14 @@ def next_page_action(webdriver):
 
 #根据微博评论和url，通过访问url,然后找出对应微博，来转发微博
 def forword_by_comment(webdriver, weibo):
+    print '转发微博,内容为:' + weibo.comment
     webdriver.get(weibo.author_url)
     time.sleep(4)
-    for w in get_all_weibo(webdriver):
+    weibos = get_all_weibo(webdriver)
+    if not weibos:
+        time.sleep(4)
+        weibos = get_all_weibo(webdriver)
+    for w in weibos:
         ww = weibo_parse(w)
         if ww.time == weibo.time:
             forword_weibo(webdriver, w, "")
