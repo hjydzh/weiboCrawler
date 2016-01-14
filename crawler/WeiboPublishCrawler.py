@@ -18,6 +18,7 @@ class WeiboPublishCrawler:
 
     def publish(self):
         self.browser.set_page_load_timeout(120)
+        #browser = LoginController.log_in(self.browser, '2823128008@qq.com', "a13870093884")
         LoginController.login_by_cookie(self.browser)
         #LoginController.login_by_cookie(self.browser)
         #WeiboPageCommon.scroll(self.browser)
@@ -52,7 +53,7 @@ class WeiboPublishCrawler:
     def __get_webibo_info(self, weibo_driver):
         try:
             #author_info = HomePage.show_fans_info(weibo_driver, self.browser)
-            weibo = WeiboPageCommon.weibo_parse(weibo_driver)
+            weibo = WeiboPageCommon.weibo_and_comment_parse(weibo_driver)
             #weibo.author_info = author_info
         except :
             traceback.print_exc()
