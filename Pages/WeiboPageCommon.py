@@ -191,19 +191,20 @@ def forword_by_comment(webdriver, weibo):
                 return
         except:
             pass
+    #如果没找到，则转发第二条，最有可能是
     forword_weibo(webdriver, weibos[1], "")
 
 #转发一条微博
 def forword_weibo(webdriver, weibo_driver, forword_comment):
     print '转发微博。微博评论为:' + forword_comment
-    __comment_action(weibo_driver)
     weibo_driver.find_element_by_xpath(".//a[@action-type='fl_forward']").click()
     time.sleep(2)
     forward_driver = webdriver.find_element_by_class_name('layer_forward')
     text_driver = forward_driver.find_element_by_tag_name('textarea')
     text_driver.clear()
     text_driver.send_keys(forword_comment.decode('utf-8'))
-    forward_driver.find_element_by_class_name('W_btn_a').click()
+    webdriver.find_elements_by_class_name('W_btn_a')[1].click()
+    print('成功')
 
 if __name__ == '__main__':
     time_parse('05月20日 18:30')
