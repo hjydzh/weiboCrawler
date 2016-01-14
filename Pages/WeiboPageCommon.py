@@ -1,7 +1,8 @@
 #coding:utf-8
 from dmo.Weibo import Weibo
 import time
-from commons.DateUtils import DateUtils
+from utils import DateUtil
+from commons import TimeConst
 from dmo.Comment import Comment
 #任何页面的微博主体页
 
@@ -130,7 +131,7 @@ def __inner_weibo_parse(weibo_driver):
 #获得所有微博
 def get_all_weibo(browser):
      print '获取所有微博列表'
-     weibo_list = browser.find_element_by_xpath("//div[@node-type='homefeed']").find_elements_by_xpath(".//div[@action-type='feed_list_item']")
+     weibo_list = browser.find_elements_by_xpath("//div[@action-type='feed_list_item']")
      print '获取列表成功'
      return weibo_list
 
@@ -144,23 +145,23 @@ def scroll(driver):
 def time_parse(time_str):
     if '分钟前' in time_str:
         time_str = time_str.split('分钟前')[0]
-        weibo_time = DateUtils.substract_minus_by_now(int(time_str))
+        weibo_time = DateUtil.substract_minus_by_now(int(time_str))
     elif '今天 ' in time_str:
         time_str = time_str.split('今天 ')[1]
         weibo_style = '%Y-%m-%d '
-        day = DateUtils.now_format(weibo_style)
+        day = DateUtil.now_format(weibo_style)
         time = day + time_str + ':00'
-        weibo_time = DateUtils.str_time(time, DateUtils.STYLE_MYSQL)
+        weibo_time = DateUtil.str_to_time(time, TimeConst.Const.STYLE_MYSQL)
     elif '2015' in time_str or '2014' in time_str or '2013' in time_str or '2012' in time_str or '2011' in time_str:
         style = "%Y-%m-%d %H:%M"
-        weibo_time = DateUtils.str_time(time_str, style)
+        weibo_time = DateUtil.str_to_time(time_str, style)
     elif '秒前' in time_str:
         style = "%Y-%m-%d %H:%M"
-        weibo_time = DateUtils.day_now_str(style)
+        weibo_time = DateUtil.now_format(style)
     else:
         weibo_style =  '%Y年%m月%d日 %H:%M:%S'
-        time_str = str(DateUtils.now().year) + '年' + time_str + ':00'
-        weibo_time = DateUtils.str_time(time_str, weibo_style)
+        time_str = str(DateUtil.now().year) + '年' + time_str + ':00'
+        weibo_time = DateUtil.str_to_time(time_str, weibo_style)
     return weibo_time
 
 #下一页按钮
@@ -168,9 +169,22 @@ def next_page_action(webdriver):
     webdriver.find_element_by_xpath(".//a[@class='page next S_txt1 S_line1']").click()
     webdriver.implicitly_wait(10)
 
+#根据微博评论和url，通过访问url,然后找出对应微博，来转发微博
+def forword_by_comment(webdriver, weibo):
+    webdriver.get(weibo.author_url)
+    time.sleep(4)
+    for w in get_all_weibo(webdriver):
+        ww = weibo_parse(w)
+        if ww.time == weibo.time:
+            forword_weibo(webdriver, w, "")
+            return
+    pass
+
 #转发一条微博
-def forword_weibo(webdriver, weibo, forword_comment):
-    weibo.weibo_driver.find_element_by_xpath(".//span[@node-type='forward_btn_text']").click()
+def forword_weibo(webdriver, weibo_driver, forword_comment):
+    print '转发微博。微博评论为:' + forword_comment
+    __comment_action(weibo_driver)
+    weibo_driver.find_element_by_xpath(".//a[@action-type='fl_forward']").click()
     time.sleep(2)
     forward_driver = webdriver.find_element_by_class_name('layer_forward')
     text_driver = forward_driver.find_element_by_tag_name('textarea')
