@@ -85,6 +85,11 @@ def weibo_parse(weibo_driver):
     if good_num:
         weibo.good_num = int(good_num)
     weibo.fordward_weibo = forward_weibo
+    return weibo
+
+#解析微博和评论
+def weibo_and_comment_parse(weibo_driver):
+    weibo = weibo_parse(weibo_driver)
     weibo.comment_list = __parsed_comment_fans(weibo_driver)
     return weibo
 
@@ -179,11 +184,14 @@ def forword_by_comment(webdriver, weibo):
         time.sleep(4)
         weibos = get_all_weibo(webdriver)
     for w in weibos:
-        ww = weibo_parse(w)
-        if ww.time == weibo.time:
-            forword_weibo(webdriver, w, "")
-            return
-    pass
+        try:
+            ww = weibo_parse(w)
+            if ww.time == weibo.time:
+                forword_weibo(webdriver, w, "")
+                return
+        except:
+            pass
+    forword_weibo(webdriver, weibos[1], "")
 
 #转发一条微博
 def forword_weibo(webdriver, weibo_driver, forword_comment):
