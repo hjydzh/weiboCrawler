@@ -2,14 +2,13 @@
 import sys
 sys.path.append('/home/workspace/webcrawler/weiboCrawler')
 from Pages import WeiboPageCommon
-from Pages import HomePage
 from Pages import FriendHomePage
 from strategy import PublishStrategy
 from loginController import LoginController
 import time
 import traceback
 from dmo.FansInfo import FansInfo
-from selenium.webdriver.common.keys import Keys
+
 
 class WeiboPublishCrawler:
 
@@ -18,11 +17,14 @@ class WeiboPublishCrawler:
 
     def publish(self):
         self.browser.set_page_load_timeout(120)
-        #browser = LoginController.log_in(self.browser, '2823128008@qq.com', "a13870093884")
+        #LoginController.log_in(self.browser, '2823128008@qq.com', "a13870093884")
         LoginController.login_by_cookie(self.browser)
-        #LoginController.login_by_cookie(self.browser)
-        #WeiboPageCommon.scroll(self.browser)
-        print('等待4s')
+        print('等待4s,滚动屏幕')
+        WeiboPageCommon.scroll(self.browser)
+        time.sleep(4)
+        WeiboPageCommon.scroll(self.browser)
+        time.sleep(4)
+        WeiboPageCommon.scroll(self.browser)
         time.sleep(4)
         print('等待结束')
         try:
@@ -32,9 +34,9 @@ class WeiboPublishCrawler:
             self.browser.get('http://weibo.com/')
             time.sleep(4)
             weibo_list =  WeiboPageCommon.get_all_weibo(self.browser)
+        print('需要解析的微博数目:' + str(len(weibo_list)))
         weibos = map(lambda weibo_driver:self.__get_webibo_info(weibo_driver), weibo_list)
-        #WeiboPageCommon.scroll(self.browser)
-        weibos.extend(map(lambda weibo_driver:self.__get_webibo_info(weibo_driver), WeiboPageCommon.get_all_weibo(self.browser)[len(weibo_list):]))
+        #weibos.extend(map(lambda weibo_driver:self.__get_webibo_info(weibo_driver), WeiboPageCommon.get_all_weibo(self.browser)[len(weibo_list):]))
         weibos = filter(lambda w : w is not None , weibos)
         #打开新的选项卡
         #self.browser.find_element_by_tag_name("body").send_keys(Keys.CONTROL + 't')
@@ -77,5 +79,16 @@ class WeiboPublishCrawler:
 
 
 if __name__ == '__main__':
-    crawler = WeiboPublishCrawler(LoginController.get_browser())
-    crawler.publish()
+    error_times = 0
+    while error_times < 10:
+        try:
+            print '第%s次启动' % error_times
+            crawler = WeiboPublishCrawler(LoginController.get_browser())
+            crawler.publish()
+            break
+        except:
+            try:
+                crawler.browser.close()
+                crawler.browser.quit()
+            except:
+                pass
