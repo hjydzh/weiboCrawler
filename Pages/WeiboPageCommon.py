@@ -176,7 +176,7 @@ def next_page_action(webdriver):
 
 #根据微博评论和url，通过访问url,然后找出对应微博，来转发微博
 def forword_by_comment(webdriver, weibo):
-    print '转发微博,内容为:' + weibo.comment
+    print '转发微博,作者：%s, 内容:%s, 发表时间:%s' % (weibo.author_name,weibo.comment, weibo.time)
     webdriver.get(weibo.author_url)
     time.sleep(4)
     weibos = get_all_weibo(webdriver)
@@ -186,12 +186,14 @@ def forword_by_comment(webdriver, weibo):
     for w in weibos:
         try:
             ww = weibo_parse(w)
+            print '候选微博内容:%s, 时间:%s' % (ww.comment, ww.time)
             if ww.time == weibo.time:
                 forword_weibo(webdriver, w, "")
                 return
         except:
             pass
     #如果没找到，则转发第二条，最有可能是
+    print '没匹配到合适的，转发第二条'
     forword_weibo(webdriver, weibos[1], "")
 
 #转发一条微博
