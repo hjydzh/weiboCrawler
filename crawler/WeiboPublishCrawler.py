@@ -65,6 +65,8 @@ class WeiboPublishCrawler:
     #获取微博用户信息
     def __get_weiboer_info(self, weibo):
         try:
+            print('访问:'),
+            print(weibo.author_url)
             self.browser.get(weibo.author_url)
             time.sleep(4)
             info = FriendHomePage.get_friend_info(self.browser)
@@ -93,4 +95,5 @@ if __name__ == '__main__':
             except:
                 pass
         error_times = error_times + 1
+        print('出错，休息1分钟')
         time.sleep(60)
