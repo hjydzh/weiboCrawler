@@ -79,7 +79,7 @@ class WeiboPublishCrawler:
 
 
 if __name__ == '__main__':
-    error_times = 0
+    error_times = 1
     while error_times < 10:
         try:
             print '第%s次启动' % error_times
@@ -92,3 +92,5 @@ if __name__ == '__main__':
                 crawler.browser.quit()
             except:
                 pass
+        error_times = error_times + 1
+        time.sleep(60)

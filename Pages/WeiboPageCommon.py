@@ -187,7 +187,7 @@ def forword_by_comment(webdriver, weibo):
         try:
             ww = weibo_parse(w)
             print '候选微博内容:%s, 时间:%s' % (ww.comment, ww.time)
-            if ww.time == weibo.time:
+            if ww.time[:16] == weibo.time[:16]:
                 forword_weibo(webdriver, w, "")
                 return
         except:
@@ -212,6 +212,7 @@ def forword_weibo(webdriver, weibo_driver, forword_comment):
     print('成功')
 
 if __name__ == '__main__':
+    print '2016-01-16 22:59:48.064000'[:16]
     time_parse('05月20日 18:30')
 
 
