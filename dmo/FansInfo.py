@@ -1,6 +1,7 @@
 #coding:utf-8
 #粉丝信息详情
 class FansInfo:
+    id = ''
     name = ''
     gender = ''
     href = ''
@@ -10,4 +11,7 @@ class FansInfo:
     edu = ''
     company = ''
     address = ()
-    focus_action = None
+    #存放需要的driver
+    driver = None
+    #和我的关系,0为互相关注，1为我关注了他，2为他关注了我
+    relationship = None

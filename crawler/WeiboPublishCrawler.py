@@ -1,4 +1,4 @@
-#coding:utf-
+#coding:utf-8
 import sys
 sys.path.append('/home/workspace/webcrawler/weiboCrawler')
 from Pages import WeiboPageCommon
@@ -8,7 +8,9 @@ from loginController import LoginController
 import time
 import traceback
 from dmo.FansInfo import FansInfo
-
+from service import service
+from commons.CommonConst import *
+from utils import PasswdUtil
 
 class WeiboPublishCrawler:
 
@@ -17,8 +19,9 @@ class WeiboPublishCrawler:
 
     def publish(self):
         self.browser.set_page_load_timeout(120)
-        #LoginController.log_in(self.browser, '2823128008@qq.com', "a13870093884")
-        LoginController.login_by_cookie(self.browser)
+        passwd_dict = PasswdUtil.get_passwd_dict()
+        LoginController.mobile_login(self.browser, passwd_dict[Const.WEIBO_USERNAME], passwd_dict[Const.WEIBO_PASSWD])
+        #LoginController.login_by_cookie(self.browser)
         print('等待4s,滚动屏幕')
         WeiboPageCommon.scroll(self.browser)
         time.sleep(4)
@@ -81,19 +84,8 @@ class WeiboPublishCrawler:
 
 
 if __name__ == '__main__':
-    error_times = 1
-    while error_times < 10:
-        try:
-            print '第%s次启动' % error_times
-            crawler = WeiboPublishCrawler(LoginController.get_browser())
-            crawler.publish()
-            break
-        except:
-            try:
-                crawler.browser.close()
-                crawler.browser.quit()
-            except:
-                pass
-        error_times = error_times + 1
-        print('出错，休息1分钟')
-        time.sleep(60)
+    crawler = WeiboPublishCrawler(LoginController.get_browser())
+    try:
+        crawler.publish()
+    except:
+        crawler.browser.quit()

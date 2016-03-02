@@ -2,9 +2,16 @@
 import Const
 
 #普通常量类
-Const.USERNAME = 'a'
+Const.PASSWD_FILE = 'd:/passwd.txt'
 
-Const.PASSWD = 's'
+Const.WEIBO_USERNAME = 'weibo_username'
 
-Const.PHANTOMJS_PATH = '/opt/phantomjs/bin/phantomjs'
+Const.WEIBO_PASSWD = 'weibo_passwd'
+
+ #和我的关系,0为互相关注，1为我关注了他，2为他关注了我
+Const.FOCUS_EACH_OTHER = 0
+Const.ME_FOCUS_HIM = 1
+Const.HIM_FOCUS_ME = 2
+
+
 

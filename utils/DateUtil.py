@@ -46,5 +46,5 @@ def str_to_time_time_style(time_str,style):
     return time.mktime(time.strptime(time_str,style))
 
 if __name__ == '__main__':
-    a = date_of_str()
-    print str_to_time_time('2016-01-15 00:13:13')
+    if not []:
+        print 't'
