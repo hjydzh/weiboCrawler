@@ -2,7 +2,7 @@
 import Const
 
 #普通常量类
-Const.PASSWD_FILE = 'd:/passwd.txt'
+Const.PASSWD_FILE = '/home/passwd.txt'
 
 Const.WEIBO_USERNAME = 'weibo_username'
 
