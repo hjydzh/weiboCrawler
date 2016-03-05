@@ -9,7 +9,7 @@ from  commons.TimeConst import *
 
 def search():
     date = DateUtil.time_to_str(DateUtil.substract_day(DateUtil.now(), 1), Const.STYLE_YYMMDD)
-    txt = '视觉时刻  @当幸福敲不开门 [微笑][微笑]'
+    txt = '又到了推荐极具视觉冲击图片的时刻了[微笑][微笑] @当幸福敲不开门 '
     url = 'http://freepic.wetu.me/preview/%s%s.jpg'
     browser = LoginController.get_browser()
     passwd_dict = PasswdUtil.get_passwd_dict()

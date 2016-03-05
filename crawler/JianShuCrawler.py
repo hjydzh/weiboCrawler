@@ -17,7 +17,7 @@ def publish_articles():
     article_body = service.jian_shu_article_retrive(url + sorted_articles[0][1])
     browser = LoginController.get_browser()
     passwd_dict = PasswdUtil.get_passwd_dict()
-    send_text = '枕边美文--《%s》 @当幸福敲不开门 ' % article_body[0]
+    send_text = '《%s》 又到每天推荐文章的时候到了，这些都是精选的枕边读物哦，希望大家喜欢@当幸福敲不开门[害羞][害羞][害羞] ' % article_body[0]
     service.send_weibo(send_text, service.txt_to_pic(article_body[1], browser),  LoginController.mobile_login(browser, passwd_dict[Const.WEIBO_USERNAME], passwd_dict[Const.WEIBO_PASSWD]))
 
 
