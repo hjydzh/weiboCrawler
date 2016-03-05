@@ -34,7 +34,6 @@ def txt_to_pic(txt, browser):
     time.sleep(3)
     browser.find_element_by_xpath("//a[@class='btn btn-success btn-lg']").click()
     time.sleep(10)
-    browser.get_screenshot_as_file('1.png')
     browser.switch_to_frame('ueditor_0')
     html = browser.page_source
     soup = BeautifulSoup(html)
