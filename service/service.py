@@ -5,21 +5,32 @@ import time
 import json
 from BeautifulSoup import BeautifulSoup
 from loginController import LoginController
-import cgi
 from commons.CommonConst import *
 from utils import PasswdUtil
 
 def send_weibo(text, url, browser):
+    send_weibo_pics(text, [url], browser)
+
+
+def send_weibo_pics(text, urls, browser):
     browser.get('http://m.weibo.cn/mblog')
     time.sleep(3)
     browser.find_element_by_id('txt-publisher').send_keys(text.decode('utf-8'))
-    open(r'/home/1.jpg', 'wb').write(HttpUtil.request(url))
-    browser.find_element_by_class_name('picupload').send_keys(r'/home/1.jpg')
-    time.sleep(4)
-    browser.find_element_by_link_text('发送').click()
-    time.sleep(10)
+    for i,url in enumerate(urls):
+        if i==0:
+            open(r'/home/1.jpg', 'wb').write(HttpUtil.request(url))
+            pic_browser = browser.find_element_by_class_name('picupload')
+            pic_browser.send_keys(r'/home/1.jpg')
+            time.sleep(8)
+        else:
+            open(r'/home/1.jpg', 'wb').write(HttpUtil.request(url))
+            pic_browser = browser.find_element_by_name('pic')
+            pic_browser.send_keys(r'/home/1.jpg')
+            time.sleep(8)
     os.remove(r'/home/1.jpg')
+    browser.find_element_by_link_text('发送').click()
     print '发送成功'
+
 
 #把文本转换成图片，长微博形式
 def txt_to_pic(txt, browser):
@@ -28,8 +39,6 @@ def txt_to_pic(txt, browser):
     """ %  str(txt).replace('\n', '<br>').replace('\'', '"')
     browser.get(url)
     time.sleep(5)
-    #button = browser.find_element_by_id("edui111_body")
-    #button.click()
     browser.execute_script(js)
     time.sleep(3)
     browser.find_element_by_xpath("//a[@class='btn btn-success btn-lg']").click()
